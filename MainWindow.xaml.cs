@@ -24,7 +24,7 @@ namespace CMS_Game_Engines
     /// </summary>
     public partial class MainWindow : Window
     {
-        private const string usersFilePath = "users.xml"; 
+        private const string usersFilePath = "../../DataBase/users.xml"; 
         private List<User> users;
         public MainWindow()
         {
