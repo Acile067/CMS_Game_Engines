@@ -32,7 +32,7 @@ namespace CMS_Game_Engines.Windows
         }
         private void LoadGameEnginesFromXml()
         {
-            string xmlFilePath = "game_engine.xml";
+            string xmlFilePath = "../../DataBase/game_engine.xml";
 
             if (File.Exists(xmlFilePath))
             {

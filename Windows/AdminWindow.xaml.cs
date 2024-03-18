@@ -33,7 +33,7 @@ namespace CMS_Game_Engines.Windows
 
         private void LoadGameEnginesFromXml()
         {
-            string xmlFilePath = "game_engine.xml";
+            string xmlFilePath = "../../DataBase/game_engine.xml";
 
             if (File.Exists(xmlFilePath))
             {
@@ -83,7 +83,7 @@ namespace CMS_Game_Engines.Windows
                 if (engine.IsSelected)
                 {
 
-                    string rtfFilePath = engine.RtfFilePath;
+                    string rtfFilePath = "../../RTF/" + engine.RtfFilePath;
                     if (!rtfFilePath.EndsWith(".rtf", StringComparison.OrdinalIgnoreCase))
                     {
                         rtfFilePath += ".rtf";
@@ -102,7 +102,7 @@ namespace CMS_Game_Engines.Windows
 
             
             XmlSerializer serializer = new XmlSerializer(typeof(List<GameEngine>));
-            using (TextWriter writer = new StreamWriter("game_engine.xml"))
+            using (TextWriter writer = new StreamWriter("../../DataBase/game_engine.xml"))
             {
                 serializer.Serialize(writer, remainingEngines);
             }

@@ -136,7 +136,14 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="DataBase\" />
     <Folder Include="Pages\" />
+    <Folder Include="RTF\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\GodotEngine.png" />
+    <Resource Include="Images\UnityEngine.png" />
+    <Resource Include="Images\UnrealEngine.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

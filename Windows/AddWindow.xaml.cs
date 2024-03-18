@@ -17,6 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Xml.Linq;
 using System.Xml.Serialization;
+using Path = System.IO.Path;
 
 namespace CMS_Game_Engines.Windows
 {
@@ -77,7 +78,7 @@ namespace CMS_Game_Engines.Windows
             );
 
 
-                string xmlFilePath = "game_engine.xml";
+                string xmlFilePath = "../../DataBase/game_engine.xml";
 
                 
                 if (File.Exists(xmlFilePath))
@@ -109,13 +110,22 @@ namespace CMS_Game_Engines.Windows
                 }
 
 
-                string rtfFilePath = txbFilePathRtf.Text;
+                string folderName = "../../RTF"; // Name of the folder where you want to save the file
+                string folderPath = Path.Combine(Environment.CurrentDirectory, folderName); // Generating the path to the folder
+
+                // Checking if the folder exists, if not, create it
+                if (!Directory.Exists(folderPath))
+                {
+                    Directory.CreateDirectory(folderPath);
+                }
+
+                string rtfFilePath = Path.Combine(folderPath, txbFilePathRtf.Text);
+
                 if (!rtfFilePath.EndsWith(".rtf", StringComparison.OrdinalIgnoreCase))
                 {
                     rtfFilePath += ".rtf";
                 }
 
-               
                 TextRange range = new TextRange(EditorRichTextBox.Document.ContentStart, EditorRichTextBox.Document.ContentEnd);
                 using (FileStream fileStream = new FileStream(rtfFilePath, FileMode.Create))
                 {
@@ -129,7 +139,7 @@ namespace CMS_Game_Engines.Windows
         private void AddImgBtn_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Image files (*.jpg, *.jpeg, *.png, *.gif) | *.jpg; *.jpeg; *.png; *.gif";
+            openFileDialog.Filter = "Image files (*.jpg, *.jpeg, *.png, *.gif, *.svg) | *.jpg; *.jpeg; *.png; *.gif; *.svg";
             if (openFileDialog.ShowDialog() == true)
             {
                 string selectedImagePath = openFileDialog.FileName;
@@ -139,7 +149,7 @@ namespace CMS_Game_Engines.Windows
                 //SelectedImagePathLabel.Content = selectedImagePath;
                 string selectedImageName = System.IO.Path.GetFileName(selectedImagePath);
                 SelectedImageNameLabel.Content = selectedImageName;
-                savedImageName = "/" + selectedImageName;
+                savedImageName = "../Images/" + selectedImageName;
                 //BorderForImage.BorderThickness = new Thickness(0);
                 SelectedImageNameLabel.Foreground = Brushes.Black;
                 BorderForImage.BorderBrush = Brushes.Black;
