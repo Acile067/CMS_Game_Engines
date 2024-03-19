@@ -1,5 +1,6 @@
 ﻿using CMS_Game_Engines.Common;
 using CMS_Game_Engines.Windows;
+using Notification.Wpf;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -26,6 +27,7 @@ namespace CMS_Game_Engines
     {
         private const string usersFilePath = "../../DataBase/users.xml"; 
         private List<User> users;
+        private NotificationManager notificationManager;
         public MainWindow()
         {
             InitializeComponent();
@@ -33,8 +35,9 @@ namespace CMS_Game_Engines
             txbUsername.Text = "Input Username";
             var bc = new BrushConverter();
             txbUsername.Foreground = (Brush)bc.ConvertFrom("#717286");
-            
-            
+            notificationManager = new NotificationManager();
+
+
         }
         private void ExitBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -68,6 +71,11 @@ namespace CMS_Game_Engines
             }
         }
 
+        public void ShowToastNotification(ToastNotification toastNotification)
+        {
+            notificationManager.Show(toastNotification.Title, toastNotification.Message, toastNotification.Type, "WindowNotificationArea");
+        }
+
         private void SaveUsers()
         {
             XmlSerializer serializer = new XmlSerializer(typeof(List<User>));
@@ -82,6 +90,7 @@ namespace CMS_Game_Engines
         {
             string username = txbUsername.Text;
             string password = txbPassword.Password;
+            MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
 
             if (ValidateFormData()) { 
                 User user = users.Find(u => u.Username == username && u.Password == password);
@@ -106,7 +115,8 @@ namespace CMS_Game_Engines
                 }
                 else
                 {
-                    MessageBox.Show("Invalid username or password!", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                    mainWindow.ShowToastNotification(new ToastNotification("Invalid Username/Password", "Invalid username or password!", NotificationType.Error));
+                    //MessageBox.Show("Invalid username or password!", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Error);
                     UsernameErrorLabel.Content = "Invalid username!";
                     txbUsername.BorderBrush = Brushes.Red;
                     PasswordErrorLabel.Content = "Invalid password!";
@@ -118,9 +128,11 @@ namespace CMS_Game_Engines
         private bool ValidateFormData()
         {
             bool isValid = true;
+            MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
 
             if (txbUsername.Text.Trim().Equals(string.Empty) || txbUsername.Text.Trim().Equals("Input Username"))
             {
+                mainWindow.ShowToastNotification(new ToastNotification("Invalid Username", "Username field cannot be left empty!", NotificationType.Error));
                 isValid = false;
                 UsernameErrorLabel.Content = "Field cannot be left empty!";
                 txbUsername.BorderBrush = Brushes.Red;
@@ -133,6 +145,7 @@ namespace CMS_Game_Engines
 
             if (txbPassword.SecurePassword.Length == 0)
             {
+                mainWindow.ShowToastNotification(new ToastNotification("Invalid Password", "Password field cannot be left empty!", NotificationType.Error));
                 isValid = false;
                 PasswordErrorLabel.Content = "Field cannot be left empty!";
                 txbPassword.BorderBrush = Brushes.Red;

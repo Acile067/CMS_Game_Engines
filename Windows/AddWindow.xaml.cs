@@ -28,6 +28,7 @@ namespace CMS_Game_Engines.Windows
     {
         public string savedPath = "";
         public string savedImageName = "";
+        
         public AddWindow()
         {
             InitializeComponent();
@@ -45,14 +46,17 @@ namespace CMS_Game_Engines.Windows
                                             .Select(p => (Color)p.GetValue(null))
                                             .ToList();
             FontSizeComboBox.ItemsSource = Enumerable.Range(1, 30).Select(i => (double)i).ToList();
-
+            
+            //UpdateWordCount();
             this.DataContext = this;
         }
+        
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             this.DragMove();
         }
+        
 
         private void CancelBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -70,15 +74,41 @@ namespace CMS_Game_Engines.Windows
         {
             if (ValidateFormData())
             {
+                string validName = txbFilePathRtf.Text.Trim();
+
+                string xmlFilePath = "../../DataBase/game_engine.xml";
+                int counter = 0;
+
+                if (File.Exists(xmlFilePath))
+                {
+                    List<GameEngine> enginesCheck;
+                    XmlSerializer serializer = new XmlSerializer(typeof(List<GameEngine>));
+                    using (FileStream fileStream = new FileStream(xmlFilePath, FileMode.Open))
+                    {
+                        enginesCheck = (List<GameEngine>)serializer.Deserialize(fileStream);
+                    }
+
+                    foreach(var existingEngine in enginesCheck)
+                    {
+                        if(existingEngine.RtfFilePath == validName)
+                        {
+                            counter++;
+                            validName = $"{txbFilePathRtf.Text.Trim()}({counter})";
+                        }
+                    }
+
+                }
+
+
                 GameEngine engine = new GameEngine(
                 Convert.ToInt32(txbActiveUsers.Text),
                 new TextRange(EditorRichTextBox.Document.ContentStart, EditorRichTextBox.Document.ContentEnd).Text,
                 savedImageName,
-                txbFilePathRtf.Text
+                validName
             );
 
 
-                string xmlFilePath = "../../DataBase/game_engine.xml";
+                
 
                 
                 if (File.Exists(xmlFilePath))
@@ -90,10 +120,11 @@ namespace CMS_Game_Engines.Windows
                         engines = (List<GameEngine>)serializer.Deserialize(fileStream);
                     }
 
-                    // Dodavanje novog objekta u listu
+                    
                     engines.Add(engine);
+                    
 
-                    // Pisanje liste sa novim objektom nazad u XML datoteku
+                    
                     using (FileStream fileStream = new FileStream(xmlFilePath, FileMode.Create))
                     {
                         serializer.Serialize(fileStream, engines);
@@ -101,7 +132,7 @@ namespace CMS_Game_Engines.Windows
                 }
                 else
                 {
-                    // Ako XML datoteka ne postoji, kreira se nova i u nju se dodaje prvi objekat
+                    
                     using (TextWriter writer = new StreamWriter(xmlFilePath))
                     {
                         XmlSerializer serializer = new XmlSerializer(typeof(List<GameEngine>));
@@ -110,16 +141,16 @@ namespace CMS_Game_Engines.Windows
                 }
 
 
-                string folderName = "../../RTF"; // Name of the folder where you want to save the file
-                string folderPath = Path.Combine(Environment.CurrentDirectory, folderName); // Generating the path to the folder
+                string folderName = "../../RTF"; 
+                string folderPath = Path.Combine(Environment.CurrentDirectory, folderName); 
 
-                // Checking if the folder exists, if not, create it
+                
                 if (!Directory.Exists(folderPath))
                 {
                     Directory.CreateDirectory(folderPath);
                 }
 
-                string rtfFilePath = Path.Combine(folderPath, txbFilePathRtf.Text);
+                string rtfFilePath = Path.Combine(folderPath, validName);
 
                 if (!rtfFilePath.EndsWith(".rtf", StringComparison.OrdinalIgnoreCase))
                 {
@@ -132,7 +163,12 @@ namespace CMS_Game_Engines.Windows
                     range.Save(fileStream, DataFormats.Rtf);
                 }
 
-                MessageBox.Show("OK");
+                txbActiveUsers.Text = "";
+                txbFilePathRtf.Text = "";
+                EditorRichTextBox.Document.Blocks.Clear();
+                ImagePreview.Source = null;
+                SelectedImageNameLabel.Content = "";
+                MessageBox.Show("New Game Engine successfully added", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 
@@ -181,6 +217,8 @@ namespace CMS_Game_Engines.Windows
             {
                 FontSizeComboBox.SelectedItem = (double)fontSize;
             }
+
+
         }
 
         private void ColorComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -314,8 +352,40 @@ namespace CMS_Game_Engines.Windows
 
         private void txbActiveUsers_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            Regex regex = new Regex("[^0-9]+"); 
-            e.Handled = regex.IsMatch(e.Text);
+            if (!char.IsDigit(e.Text, 0))
+            {
+                e.Handled = true;
+                return;
+            }
+
+            TextBox textBox = (TextBox)sender;
+            string newText = textBox.Text.Insert(textBox.SelectionStart, e.Text);
+            int value;
+            if (!int.TryParse(newText, out value))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void UpdateWordCount()
+        {
+            
+            string text = new TextRange(EditorRichTextBox.Document.ContentStart, EditorRichTextBox.Document.ContentEnd).Text;
+            int wordCount = text.Split(new char[] { ' ', '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries).Length;
+            wordCountTextBlock.Text = $"Word Count: {wordCount}";
+        }
+        private void EditorRichTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            UpdateWordCount();
+        }
+
+        private void txbFilePathRtf_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^a-zA-Z0-9():_-]");
+            if (regex.IsMatch(e.Text))
+            {
+                e.Handled = true;
+            }
         }
     }
 }

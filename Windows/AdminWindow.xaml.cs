@@ -1,4 +1,5 @@
 ﻿using CMS_Game_Engines.Common;
+using Notification.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -23,12 +24,14 @@ namespace CMS_Game_Engines.Windows
     /// </summary>
     public partial class AdminWindow : Window
     {
+        
         public ObservableCollection<GameEngine> GameEngines { get; set; }
         public AdminWindow()
         {
             InitializeComponent();
             DataContext = this; 
             LoadGameEnginesFromXml();
+            
         }
 
         private void LoadGameEnginesFromXml()
@@ -73,38 +76,63 @@ namespace CMS_Game_Engines.Windows
             addWindow.Show();
             this.Close();
         }
+        
 
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
-            List<GameEngine> remainingEngines = new List<GameEngine>();
-
-            foreach (GameEngine engine in GameEnginesDataGrid.Items)
-            {
-                if (engine.IsSelected)
+            int cnt = 0;
+            foreach(GameEngine sectedEngine in GameEnginesDataGrid.Items) {
+                if (sectedEngine.IsSelected)
                 {
-
-                    string rtfFilePath = "../../RTF/" + engine.RtfFilePath;
-                    if (!rtfFilePath.EndsWith(".rtf", StringComparison.OrdinalIgnoreCase))
-                    {
-                        rtfFilePath += ".rtf";
-                    }
-
-                    if (File.Exists(rtfFilePath))
-                    {
-                        File.Delete(rtfFilePath);
-                    }
-                    continue;
-                }
-                remainingEngines.Add(engine);
+                    cnt++;
+                    break;
+                }   
             }
 
-            GameEnginesDataGrid.ItemsSource = remainingEngines;
-
-            
-            XmlSerializer serializer = new XmlSerializer(typeof(List<GameEngine>));
-            using (TextWriter writer = new StreamWriter("../../DataBase/game_engine.xml"))
+            if (cnt!= 0)
             {
-                serializer.Serialize(writer, remainingEngines);
+                MessageBoxResult result = MessageBox.Show("Are you sure you want to remove items?", "Delete Items Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    AdminWindow adminWindow = (AdminWindow)Application.Current.MainWindow;
+                    List<GameEngine> remainingEngines = new List<GameEngine>();
+
+                    foreach (GameEngine engine in GameEnginesDataGrid.Items)
+                    {
+                        if (engine.IsSelected)
+                        {
+
+                            string rtfFilePath = "../../RTF/" + engine.RtfFilePath;
+                            if (!rtfFilePath.EndsWith(".rtf", StringComparison.OrdinalIgnoreCase))
+                            {
+                                rtfFilePath += ".rtf";
+                            }
+
+                            if (File.Exists(rtfFilePath))
+                            {
+                                File.Delete(rtfFilePath);
+                            }
+                            continue;
+                        }
+                        remainingEngines.Add(engine);
+                    }
+
+                    GameEnginesDataGrid.ItemsSource = remainingEngines;
+
+
+                    XmlSerializer serializer = new XmlSerializer(typeof(List<GameEngine>));
+                    using (TextWriter writer = new StreamWriter("../../DataBase/game_engine.xml"))
+                    {
+                        serializer.Serialize(writer, remainingEngines);
+                    }
+
+                    MessageBox.Show("All items have been successfully deleted", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
+            else
+            {
+                MessageBox.Show("No item from the table is selected", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

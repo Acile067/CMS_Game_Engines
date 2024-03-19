@@ -163,6 +163,7 @@
                                  Padding="5"
                                  FontSize="15"
                                  Width="244"
+                                 ToolTip="Enter number of active users"
                                  ></TextBox>
                     <Label
                             Style="{StaticResource MontserratFont}"
@@ -189,6 +190,7 @@
                         
                         >
                         <ToolBar
+                            ToolTip="ToolBar for description"
                             Name="EditorToolBarTop" 
                             DockPanel.Dock="Top">
                             <ComboBox
@@ -208,6 +210,7 @@
                         <ToolBar
                             Name="EditorToolBarBottom" 
                             DockPanel.Dock="Top"
+                            ToolTip="ToolBar for description"
                             >
                             <ToggleButton
                                 Name="BoldToggleButton"
@@ -264,14 +267,24 @@
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
                         </ToolBar>
+                        <StatusBar DockPanel.Dock="Bottom" BorderBrush="#010105" BorderThickness="2 0 2 2" ToolTip="StatusBar for description">
+                            <StatusBarItem>
+                                <TextBlock x:Name="wordCountTextBlock" Style="{StaticResource MontserratFont}" FontWeight="Bold" FontSize="8"/>
+                            </StatusBarItem>
+                        </StatusBar>
                         <RichTextBox
                             BorderBrush="#010105"
                             BorderThickness="2"
                             Name="EditorRichTextBox"
                             Padding="3"
+                            ToolTip="Add description"
                             Margin="0,1,0,0"
-                            SelectionChanged="EditorRichTextBox_SelectionChanged"/>
+                            SelectionChanged="EditorRichTextBox_SelectionChanged" TextChanged="EditorRichTextBox_TextChanged"/>
+                        
                     </DockPanel>
+
+                    
+                    
                     <Label
                         Style="{StaticResource MontserratFont}"
                         FontSize="15"
@@ -286,12 +299,14 @@
                             Grid.Row="0" Grid.Column="3"
                             BorderBrush="#010105"
                             BorderThickness="2"
+                            PreviewTextInput="txbFilePathRtf_PreviewTextInput"
                             GotFocus="txbFilePathRtf_GotFocus"
                             LostFocus="txbFilePathRtf_LostFocus"
                             x:Name="txbFilePathRtf"
                             Style="{StaticResource MontserratFont}"
                             Padding="5"
                             FontSize="15"
+                            ToolTip="File name (.rtf)"
                             Width="244"
                             ></TextBox>
                     <Label
@@ -388,6 +403,7 @@
                     ></Label>
                     
                     <Border
+                        
                         x:Name="BorderForImage"
                         BorderBrush="Black"
                         BorderThickness="2"
@@ -399,8 +415,10 @@
                         VerticalAlignment="Center"
                         Width="80"
                         Height="80"
+                        ToolTip="Image border"
                         Margin="0 0 0 18">
                         <Image
+                            
                             x:Name="ImagePreview"
                             Stretch="Fill"
                         ></Image>

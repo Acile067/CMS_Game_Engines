@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:fa5 ="http://schemas.fontawesome.com/icons/"
+        xmlns:notifications="clr-namespace:Notification.Wpf.Controls;assembly=Notification.Wpf"
         xmlns:local="clr-namespace:CMS_Game_Engines.Windows"
         mc:Ignorable="d"
         Title="AdminWindow" Height="550" Width="750"
@@ -72,6 +73,8 @@
     </Window.Resources>
     
     <Canvas Width="750" Height="550">
+        
+        
         <Path Stroke="Black" StrokeThickness="2" Fill="#dad6d7">
             <Path.Data>
                 <PathGeometry>
@@ -159,7 +162,7 @@
                               >
                         <DataGrid.Columns>
                             <DataGridCheckBoxColumn Header="Select" Binding="{Binding IsSelected}" />
-                            <DataGridHyperlinkColumn Header="RTF File" Binding="{Binding RtfFilePath}" />
+                            <DataGridHyperlinkColumn Header="Name" Binding="{Binding RtfFilePath}" />
                             <DataGridTemplateColumn Header="Image">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>

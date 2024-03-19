@@ -155,7 +155,7 @@
                               >
                         <DataGrid.Columns>
                             
-                            <DataGridHyperlinkColumn Header="RTF File" Binding="{Binding RtfFilePath}" />
+                            <DataGridHyperlinkColumn Header="Name" Binding="{Binding RtfFilePath}" />
                             <DataGridTemplateColumn Header="Image">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
