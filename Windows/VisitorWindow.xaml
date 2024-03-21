@@ -12,7 +12,8 @@
         SizeToContent="WidthAndHeight"
         WindowStyle="None"
         MouseLeftButtonDown="Window_MouseLeftButtonDown"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        Loaded="Window_Loaded">
     <Window.Resources>
         <Style x:Key="FocusVisual">
             <Setter Property="Control.Template">
@@ -163,7 +164,7 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTextColumn Header="Date Added" Binding="{Binding DateAdded}" />
+                            <DataGridTextColumn Header="Date Added" Binding="{Binding DateAdded}" SortMemberPath="DateAdded"/>
                         </DataGrid.Columns>
                     </DataGrid>
 

@@ -3,6 +3,7 @@ using Notification.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -76,8 +77,30 @@ namespace CMS_Game_Engines.Windows
             addWindow.Show();
             this.Close();
         }
-        
 
+        private void Hyperlink_Click(object sender, RoutedEventArgs e)
+        {
+
+            var textBlock = (TextBlock)sender;
+
+            // Dobijanje stavke (objekta) koja je povezana sa tekstualnim blokom
+            var item = textBlock.DataContext as GameEngine; // Zamijenite YourItemClass sa stvarnim imenom vaše klase
+
+            // Provera da li je stavka pronađena
+            if (item != null)
+            {
+                EditWindow editWindow = new EditWindow(item);
+                editWindow.Show();
+                this.Close();
+                
+            }
+            else
+            {
+                // Ako nije pronađena stavka, možete prikazati odgovarajuću poruku ili rukovati drugačije
+                MessageBox.Show("Item not found.");
+            }
+
+        }
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
             int cnt = 0;
@@ -134,6 +157,11 @@ namespace CMS_Game_Engines.Windows
             {
                 MessageBox.Show("No item from the table is selected", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            GameEnginesDataGrid.Items.SortDescriptions.Add(new SortDescription("DateAdded", ListSortDirection.Descending));
         }
     }
 }
