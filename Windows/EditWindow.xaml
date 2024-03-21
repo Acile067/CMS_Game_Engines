@@ -77,6 +77,7 @@
                 <PathGeometry>
                     <PathFigure StartPoint="30,100">
                         <LineSegment Point="0,400" />
+                        
                         <ArcSegment
                             IsLargeArc="True"
                             Point="190,450"
@@ -91,30 +92,29 @@
                         <LineSegment Point="560,450" />
 
                         <ArcSegment
-                IsLargeArc="True"
-                Point="750,400"
-                RotationAngle="100"
-                Size="18,14"
-                SweepDirection="CounterClockwise" />
+                            IsLargeArc="True"
+                            Point="750,400"
+                            RotationAngle="100"
+                            Size="18,14"
+                            SweepDirection="CounterClockwise" />
 
                         <LineSegment Point="720,100" />
 
                         <ArcSegment
-                IsLargeArc="False"
-                Point="550,100"
-                RotationAngle="180"
-                Size="100,100"
-                SweepDirection="CounterClockwise" />
+                            IsLargeArc="False"
+                            Point="550,100"
+                            RotationAngle="180"
+                            Size="100,100"
+                            SweepDirection="CounterClockwise" />
 
                         <LineSegment Point="200,100" />
 
                         <ArcSegment
-            IsLargeArc="False"
-            Point="30,100"
-            RotationAngle="180"
-            Size="100,100"
-            SweepDirection="CounterClockwise" />
-
+                            IsLargeArc="False"
+                            Point="30,100"
+                            RotationAngle="180"
+                            Size="100,100"
+                            SweepDirection="CounterClockwise" />
                     </PathFigure>
                 </PathGeometry>
             </Path.Data>
@@ -152,20 +152,22 @@
                         Margin="0 0 10 0"
                         ></Label>
 
-                    <TextBox HorizontalAlignment="Left" VerticalAlignment="Center"
-                                 Grid.Row="3" Grid.Column="3"
-                                 BorderBrush="#010105"
-                                 BorderThickness="2"
-                                 GotFocus="txbActiveUsers_GotFocus"
-                                 LostFocus="txbActiveUsers_LostFocus"
-                                 PreviewTextInput="txbActiveUsers_PreviewTextInput"
-                                 x:Name="txbActiveUsers"
-                                 Style="{StaticResource MontserratFont}"
-                                 Padding="5"
-                                 FontSize="15"
-                                 Width="244"
-                                 ToolTip="Enter number of active users"
-                                 ></TextBox>
+                    <TextBox 
+                        HorizontalAlignment="Left" 
+                        VerticalAlignment="Center"
+                        Grid.Row="3" Grid.Column="3"
+                        BorderBrush="#010105"
+                        BorderThickness="2"
+                        GotFocus="txbActiveUsers_GotFocus"
+                        LostFocus="txbActiveUsers_LostFocus"
+                        PreviewTextInput="txbActiveUsers_PreviewTextInput"
+                        x:Name="txbActiveUsers"
+                        Style="{StaticResource MontserratFont}"
+                        Padding="5"
+                        FontSize="15"
+                        Width="244"
+                        ToolTip="Enter number of active users"
+                        ></TextBox>
                     <Label
                             Style="{StaticResource MontserratFont}"
                             Content=""
@@ -173,7 +175,8 @@
                             FontWeight="Bold"
                             x:Name="ActiveUsersErrorLable"
                             Grid.Row="3" Grid.Column="3"
-                            VerticalAlignment="Bottom"></Label>
+                            VerticalAlignment="Bottom"
+                        ></Label>
 
                     <Label
                         Style="{StaticResource MontserratFont}"

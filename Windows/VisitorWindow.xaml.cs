@@ -66,6 +66,29 @@ namespace CMS_Game_Engines.Windows
                 this.Close();
             }
         }
+        private void Hyperlink_Click(object sender, RoutedEventArgs e)
+        {
+
+            var textBlock = (TextBlock)sender;
+
+            // Dobijanje stavke (objekta) koja je povezana sa tekstualnim blokom
+            var item = textBlock.DataContext as GameEngine; // Zamijenite YourItemClass sa stvarnim imenom vaše klase
+
+            // Provera da li je stavka pronađena
+            if (item != null)
+            {
+                ViewWindow editWindow = new ViewWindow(item);
+                editWindow.Show();
+                this.Close();
+
+            }
+            else
+            {
+                // Ako nije pronađena stavka, možete prikazati odgovarajuću poruku ili rukovati drugačije
+                MessageBox.Show("Item not found.");
+            }
+
+        }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
