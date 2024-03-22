@@ -462,6 +462,13 @@ namespace CMS_Game_Engines.Windows
         #region PreviewTextInput/Regex
         private void txbFilePathRtf_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
+            TextBox textBox = sender as TextBox;
+            if (textBox != null && textBox.Text.Length >= 25)
+            {
+                e.Handled = true;
+                return;
+            }
+
             Regex regex = new Regex("[^a-zA-Z0-9():_-]");
             if (regex.IsMatch(e.Text))
             {

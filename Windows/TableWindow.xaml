@@ -159,16 +159,29 @@
                         ScrollViewer.CanContentScroll="True" 
                         ScrollViewer.VerticalScrollBarVisibility="Auto"
                         ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                        CanUserAddRows="False"                              
+                        CanUserAddRows="False"
+                        CanUserResizeColumns="False"
+                        CanUserResizeRows="False"
+                        CanUserReorderColumns="False"
                         >
                         <DataGrid.Columns>
                             
-                            <DataGridCheckBoxColumn x:Name="SelectColon" Header="Select" Binding="{Binding IsSelected}" />
-                            
+                            <DataGridCheckBoxColumn x:Name="SelectColon" Header="Select" Binding="{Binding IsSelected}">
+                                <DataGridCheckBoxColumn.ElementStyle>
+                                    <Style TargetType="CheckBox">
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                    </Style>
+                                </DataGridCheckBoxColumn.ElementStyle>
+                            </DataGridCheckBoxColumn>
+
                             <DataGridHyperlinkColumn Header="Name" Binding="{Binding RtfFilePath}">
                                 <DataGridHyperlinkColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <EventSetter Event="Hyperlink.Click" Handler="Hyperlink_Click"></EventSetter>
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                        <Setter Property="Padding" Value="5"/>
                                     </Style>
                                 </DataGridHyperlinkColumn.ElementStyle>
                             </DataGridHyperlinkColumn>
@@ -181,8 +194,16 @@
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                             
-                            <DataGridTextColumn Header="Date Added" Binding="{Binding DateAdded}" SortMemberPath="DateAdded"/>
-                            
+                            <DataGridTextColumn Header="Date Added" Binding="{Binding DateAdded}" SortMemberPath="DateAdded">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        <Setter Property="Padding" Value="10"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
                         </DataGrid.Columns>
                     </DataGrid>
 
