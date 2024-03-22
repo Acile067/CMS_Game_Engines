@@ -29,11 +29,12 @@ namespace CMS_Game_Engines.Windows
         public string savedPath = "";
         public string savedImageName = "";
         public string startFileName = "";
-        
+        public User savedUser = new User();
         public ObservableCollection<GameEngine> GameEngines { get; set; }
-        public EditWindow(GameEngine engine)
+        public EditWindow(GameEngine engine, User user)
         {
             InitializeComponent();
+            savedUser = user;
             txbFilePathRtf.Text = engine.RtfFilePath;
             startFileName = engine.RtfFilePath.Trim();
 
@@ -435,8 +436,8 @@ namespace CMS_Game_Engines.Windows
 
             if (result == MessageBoxResult.Yes)
             {
-                AdminWindow adminWindow = new AdminWindow();
-                adminWindow.Show();
+                TableWindow tableWindow = new TableWindow(savedUser);
+                tableWindow.Show();
                 this.Close();
             }
         }

@@ -21,18 +21,36 @@ using System.Xml.Serialization;
 namespace CMS_Game_Engines.Windows
 {
     /// <summary>
-    /// Interaction logic for AdminWindow.xaml
+    /// Interaction logic for TableWindow.xaml
     /// </summary>
-    public partial class AdminWindow : Window
+    public partial class TableWindow : Window
     {
-        
         public ObservableCollection<GameEngine> GameEngines { get; set; }
-        public AdminWindow()
+        public User savedUser = new User();
+        public TableWindow(User user)
         {
             InitializeComponent();
-            DataContext = this; 
+            savedUser = user;
+            if(user.Role == UserRole.Admin)
+            {
+                ADDBtn.Visibility = Visibility.Visible;
+                DeleteBtn.Visibility = Visibility.Visible;
+                SelectColon.Visibility = Visibility.Visible;
+                AddBtnLabel.Visibility = Visibility.Visible;
+                DeleteBtnLabel.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                ADDBtn.Visibility = Visibility.Hidden;
+                DeleteBtn.Visibility = Visibility.Hidden;
+                SelectColon.Visibility= Visibility.Hidden;
+                AddBtnLabel.Visibility = Visibility.Hidden;
+                DeleteBtnLabel.Visibility = Visibility.Hidden;
+            }
+
+            DataContext = this;
             LoadGameEnginesFromXml();
-            
+
         }
 
         private void LoadGameEnginesFromXml()
@@ -49,7 +67,7 @@ namespace CMS_Game_Engines.Windows
             }
             else
             {
-                
+
                 GameEngines = new ObservableCollection<GameEngine>();
             }
         }
@@ -73,7 +91,7 @@ namespace CMS_Game_Engines.Windows
 
         private void ADDBtn_Click(object sender, RoutedEventArgs e)
         {
-            AddWindow addWindow = new AddWindow();
+            AddWindow addWindow = new AddWindow(savedUser);
             addWindow.Show();
             this.Close();
         }
@@ -89,10 +107,20 @@ namespace CMS_Game_Engines.Windows
             // Provera da li je stavka pronađena
             if (item != null)
             {
-                EditWindow editWindow = new EditWindow(item);
-                editWindow.Show();
-                this.Close();
+                if(savedUser.Role == UserRole.Admin)
+                {
+                    EditWindow editWindow = new EditWindow(item, savedUser);
+                    editWindow.Show();
+                    this.Close();
+                }
+                else
+                {
+                    ViewWindow viewWindow = new ViewWindow(item, savedUser);
+                    viewWindow.Show();
+                    this.Close();
+                }
                 
+
             }
             else
             {
@@ -104,21 +132,22 @@ namespace CMS_Game_Engines.Windows
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
             int cnt = 0;
-            foreach(GameEngine sectedEngine in GameEnginesDataGrid.Items) {
+            foreach (GameEngine sectedEngine in GameEnginesDataGrid.Items)
+            {
                 if (sectedEngine.IsSelected)
                 {
                     cnt++;
                     break;
-                }   
+                }
             }
 
-            if (cnt!= 0)
+            if (cnt != 0)
             {
                 MessageBoxResult result = MessageBox.Show("Are you sure you want to remove items?", "Delete Items Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
                 if (result == MessageBoxResult.Yes)
                 {
-                    AdminWindow adminWindow = (AdminWindow)Application.Current.MainWindow;
+                    TableWindow tableWindow = (TableWindow)Application.Current.MainWindow;
                     List<GameEngine> remainingEngines = new List<GameEngine>();
 
                     foreach (GameEngine engine in GameEnginesDataGrid.Items)
@@ -165,3 +194,4 @@ namespace CMS_Game_Engines.Windows
         }
     }
 }
+

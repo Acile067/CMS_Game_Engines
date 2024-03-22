@@ -75,17 +75,14 @@
     <Compile Include="Windows\AddWindow.xaml.cs">
       <DependentUpon>AddWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\AdminWindow.xaml.cs">
-      <DependentUpon>AdminWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Windows\EditWindow.xaml.cs">
       <DependentUpon>EditWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\TableWindow.xaml.cs">
+      <DependentUpon>TableWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\ViewWindow.xaml.cs">
       <DependentUpon>ViewWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\VisitorWindow.xaml.cs">
-      <DependentUpon>VisitorWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -104,19 +101,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\AdminWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Windows\EditWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\ViewWindow.xaml">
+    <Page Include="Windows\TableWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\VisitorWindow.xaml">
+    <Page Include="Windows\ViewWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

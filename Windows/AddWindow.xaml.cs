@@ -28,10 +28,11 @@ namespace CMS_Game_Engines.Windows
     {
         public string savedPath = "";
         public string savedImageName = "";
-        
-        public AddWindow()
+        public User savedUser = new User();
+        public AddWindow(User user)
         {
             InitializeComponent();
+            savedUser = user;
             txbFilePathRtf.Text = "Input file name";
             var bc = new BrushConverter();
             txbFilePathRtf.Foreground = (Brush)bc.ConvertFrom("#717286");
@@ -64,8 +65,8 @@ namespace CMS_Game_Engines.Windows
 
             if (result == MessageBoxResult.Yes)
             {
-                AdminWindow adminWindow = new AdminWindow();
-                adminWindow.Show();
+                TableWindow tableWindow = new TableWindow(savedUser);
+                tableWindow.Show();
                 this.Close();
             }
         }

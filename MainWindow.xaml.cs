@@ -97,20 +97,8 @@ namespace CMS_Game_Engines
                 if (user != null)
                 {
                     
-                    if (user.Role == UserRole.Admin)
-                    {
-                        
-                        AdminWindow adminWindow = new AdminWindow();
-                        adminWindow.Show();
-                    }
-                    else if (user.Role == UserRole.Visitor)
-                    {
-                        
-                        VisitorWindow visitorWindow = new VisitorWindow();
-                        visitorWindow.Show();
-                    }
-
-                    
+                    TableWindow tableWindow = new TableWindow(user);
+                    tableWindow.Show();
                     Close();
                 }
                 else

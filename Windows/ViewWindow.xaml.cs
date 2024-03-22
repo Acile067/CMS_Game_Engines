@@ -22,11 +22,12 @@ namespace CMS_Game_Engines.Windows
     /// </summary>
     public partial class ViewWindow : Window
     {
-        public ViewWindow(GameEngine engine)
+        public User savedUser = new User();
+        public ViewWindow(GameEngine engine, User user)
         {
             InitializeComponent();
             NameLabel.Content = engine.RtfFilePath;
-
+            savedUser = user;
             ImagePreview.Source = new BitmapImage(new Uri(engine.ImagePath, UriKind.Relative));
             string imageName = Path.GetFileName(engine.ImagePath);
             SelectedImageNameLabel.Content = imageName;
@@ -66,8 +67,8 @@ namespace CMS_Game_Engines.Windows
 
         private void BackBtn_Click(object sender, RoutedEventArgs e)
         {
-            VisitorWindow visitorWindow = new VisitorWindow();
-            visitorWindow.Show();
+            TableWindow tableWindow = new TableWindow(savedUser);
+            tableWindow.Show();
             this.Close();
         }
     }
