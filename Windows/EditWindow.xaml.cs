@@ -26,6 +26,7 @@ namespace CMS_Game_Engines.Windows
     /// </summary>
     public partial class EditWindow : Window
     {
+        #region Initialize
         public string savedPath = "";
         public string savedImageName = "";
         public string startFileName = "";
@@ -85,232 +86,27 @@ namespace CMS_Game_Engines.Windows
             this.DataContext = this;
         }
 
-        private void txbActiveUsers_GotFocus(object sender, RoutedEventArgs e)
+        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (txbActiveUsers.Text.Trim().Equals("Input number of users"))
-            {
-                txbActiveUsers.Text = "";
-                txbActiveUsers.Foreground = Brushes.Black;
-            }
-            ActiveUsersErrorLable.Content = "";
-            txbActiveUsers.BorderBrush = Brushes.Black;
+            this.DragMove();
         }
+        #endregion
 
-        private void txbActiveUsers_LostFocus(object sender, RoutedEventArgs e)
+        #region CancelBtn
+        private void CancelBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (txbActiveUsers.Text.Trim().Equals(string.Empty))
-            {
-                txbActiveUsers.Text = "Input number of users";
-                var bc = new BrushConverter();
-                txbActiveUsers.Foreground = (Brush)bc.ConvertFrom("#717286");
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to cancel?", "Cancel Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
+            if (result == MessageBoxResult.Yes)
+            {
+                TableWindow tableWindow = new TableWindow(savedUser);
+                tableWindow.Show();
+                this.Close();
             }
         }
-        private void UpdateWordCount()
-        {
+        #endregion
 
-            string text = new TextRange(EditorRichTextBox.Document.ContentStart, EditorRichTextBox.Document.ContentEnd).Text;
-            int wordCount = text.Split(new char[] { ' ', '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries).Length;
-            wordCountTextBlock.Text = $"Word Count: {wordCount}";
-        }
-
-        private void txbActiveUsers_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            if (!char.IsDigit(e.Text, 0))
-            {
-                e.Handled = true;
-                return;
-            }
-
-            TextBox textBox = (TextBox)sender;
-            string newText = textBox.Text.Insert(textBox.SelectionStart, e.Text);
-            int value;
-            if (!int.TryParse(newText, out value))
-            {
-                e.Handled = true;
-            }
-        }
-
-        private void FontFamilyComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (FontFamilyComboBox.SelectedItem != null && !EditorRichTextBox.Selection.IsEmpty)
-            {
-                EditorRichTextBox.Selection.ApplyPropertyValue(Inline.FontFamilyProperty, FontFamilyComboBox.SelectedItem);
-            }
-        }
-
-        private void FontSizeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (FontSizeComboBox.SelectedItem != null && !EditorRichTextBox.Selection.IsEmpty)
-            {
-                EditorRichTextBox.Selection.ApplyPropertyValue(Inline.FontSizeProperty, FontSizeComboBox.SelectedItem);
-            }
-        }
-
-        private void ColorComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (ColorComboBox.SelectedItem != null && !EditorRichTextBox.Selection.IsEmpty)
-            {
-                if (ColorComboBox.SelectedItem is Color selectedColor)
-                {
-
-                    SolidColorBrush brush = new SolidColorBrush(selectedColor);
-                    EditorRichTextBox.Selection.ApplyPropertyValue(Inline.ForegroundProperty, brush);
-                }
-            }
-        }
-
-        private void EditorRichTextBox_SelectionChanged(object sender, RoutedEventArgs e)
-        {
-            UpdateWordCount();
-        }
-
-        private void EditorRichTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            object fontWeight = EditorRichTextBox.Selection.GetPropertyValue(Inline.FontWeightProperty);
-            BoldToggleButton.IsChecked = (fontWeight != DependencyProperty.UnsetValue) && (fontWeight.Equals(FontWeights.Bold));
-
-            object fontStyle = EditorRichTextBox.Selection.GetPropertyValue(Inline.FontStyleProperty);
-            ItalicToggleButton.IsChecked = (fontStyle != DependencyProperty.UnsetValue) && (fontStyle.Equals(FontStyles.Italic));
-
-            object textDecoration = EditorRichTextBox.Selection.GetPropertyValue(Inline.TextDecorationsProperty);
-            UnderlineToggleButton.IsChecked = (textDecoration != DependencyProperty.UnsetValue) && (textDecoration.Equals(TextDecorations.Underline));
-
-            object fontFamily = EditorRichTextBox.Selection.GetPropertyValue(Inline.FontFamilyProperty);
-            FontFamilyComboBox.SelectedItem = fontFamily;
-
-            object foregroundColor = EditorRichTextBox.Selection.GetPropertyValue(Inline.ForegroundProperty);
-            if (foregroundColor is SolidColorBrush brush)
-            {
-                Color selectedColor = brush.Color;
-                ColorComboBox.SelectedItem = selectedColor;
-            }
-
-            object fontSize = EditorRichTextBox.Selection.GetPropertyValue(Inline.FontSizeProperty);
-            if (fontSize != DependencyProperty.UnsetValue)
-            {
-                FontSizeComboBox.SelectedItem = (double)fontSize;
-            }
-        }
-
-        private void txbFilePathRtf_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            Regex regex = new Regex("[^a-zA-Z0-9():_-]");
-            if (regex.IsMatch(e.Text))
-            {
-                e.Handled = true;
-            }
-        }
-
-        private void txbFilePathRtf_GotFocus(object sender, RoutedEventArgs e)
-        {
-            if (txbFilePathRtf.Text.Trim().Equals("Input file name"))
-            {
-                txbFilePathRtf.Text = "";
-                txbFilePathRtf.Foreground = Brushes.Black;
-            }
-            FilePathRtfErrorLable.Content = "";
-            txbFilePathRtf.BorderBrush = Brushes.Black;
-        }
-
-        private void txbFilePathRtf_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (txbFilePathRtf.Text.Trim().Equals(string.Empty))
-            {
-                txbFilePathRtf.Text = "Input file name";
-                var bc = new BrushConverter();
-                txbFilePathRtf.Foreground = (Brush)bc.ConvertFrom("#717286");
-
-            }
-        }
-
-        private bool ValidateFormData()
-        {
-            bool isValid = true;
-
-
-            string input = txbActiveUsers.Text;
-            if (!string.IsNullOrEmpty(input))
-            {
-                try
-                {
-                    int result = int.Parse(input);
-
-                }
-                catch (FormatException)
-                {
-                    isValid = false;
-                    ActiveUsersErrorLable.Content = "Not a number!";
-                    txbActiveUsers.BorderBrush = Brushes.Red;
-                }
-            }
-
-            if (txbFilePathRtf.Text.Trim().Equals(string.Empty) || txbFilePathRtf.Text.Trim().Equals("Input file name"))
-            {
-                isValid = false;
-                FilePathRtfErrorLable.Content = "Field cannot be left empty!";
-                txbFilePathRtf.BorderBrush = Brushes.Red;
-            }
-            else
-            {
-                FilePathRtfErrorLable.Content = string.Empty;
-                txbFilePathRtf.BorderBrush = Brushes.Black;
-            }
-
-            if (txbActiveUsers.Text.Trim().Equals(string.Empty) || txbActiveUsers.Text.Trim().Equals("Input number of users"))
-            {
-                isValid = false;
-                ActiveUsersErrorLable.Content = "Field cannot be left empty!";
-                txbActiveUsers.BorderBrush = Brushes.Red;
-            }
-            else
-            {
-                ActiveUsersErrorLable.Content = string.Empty;
-                txbActiveUsers.BorderBrush = Brushes.Black;
-            }
-
-
-            if (SelectedImageNameLabel.Content.ToString().Trim() == string.Empty || SelectedImageNameLabel.Content.ToString() == "Image must be added!")
-            {
-                isValid = false;
-                SelectedImageNameLabel.Content = "Image must be added!";
-                SelectedImageNameLabel.Foreground = Brushes.Red;
-                BorderForImage.BorderBrush = Brushes.Red;
-            }
-
-            if (startFileName.Trim() != txbFilePathRtf.Text.Trim())
-            {
-                string xmlFilePath = "../../DataBase/game_engine.xml";
-
-                if (File.Exists(xmlFilePath))
-                {
-                    XmlSerializer serializer = new XmlSerializer(typeof(ObservableCollection<GameEngine>));
-                    using (FileStream fileStream = new FileStream(xmlFilePath, FileMode.Open))
-                    {
-                        GameEngines = (ObservableCollection<GameEngine>)serializer.Deserialize(fileStream);
-                    }
-                }
-                else
-                {
-                    GameEngines = new ObservableCollection<GameEngine>();
-                }
-
-                foreach (GameEngine engine in GameEngines) 
-                { 
-                    if(engine.RtfFilePath == txbFilePathRtf.Text.Trim())
-                    {
-                        txbFilePathRtf.BorderBrush = Brushes.Red;
-                        FilePathRtfErrorLable.Content = "Name is already in use";
-                        isValid = false;
-                        break;
-                    }
-                }
-
-            }
-
-            return isValid;
-        }
-
+        #region SaveBtn
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
             if (ValidateFormData())
@@ -429,19 +225,9 @@ namespace CMS_Game_Engines.Windows
                 MessageBox.Show("Game Engine successfully edited", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
+        #endregion
 
-        private void CancelBtn_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBoxResult result = MessageBox.Show("Are you sure you want to cancel?", "Cancel Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
-
-            if (result == MessageBoxResult.Yes)
-            {
-                TableWindow tableWindow = new TableWindow(savedUser);
-                tableWindow.Show();
-                this.Close();
-            }
-        }
-
+        #region AddImgBtn
         private void AddImgBtn_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -461,15 +247,244 @@ namespace CMS_Game_Engines.Windows
                 BorderForImage.BorderBrush = Brushes.Black;
             }
         }
+        #endregion
 
-        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        #region SelectionChanged->EditorRichTextBox
+        private void FontFamilyComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            this.DragMove();
+            if (FontFamilyComboBox.SelectedItem != null && !EditorRichTextBox.Selection.IsEmpty)
+            {
+                EditorRichTextBox.Selection.ApplyPropertyValue(Inline.FontFamilyProperty, FontFamilyComboBox.SelectedItem);
+            }
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        private void FontSizeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (FontSizeComboBox.SelectedItem != null && !EditorRichTextBox.Selection.IsEmpty)
+            {
+                EditorRichTextBox.Selection.ApplyPropertyValue(Inline.FontSizeProperty, FontSizeComboBox.SelectedItem);
+            }
+        }
+
+        private void ColorComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (ColorComboBox.SelectedItem != null && !EditorRichTextBox.Selection.IsEmpty)
+            {
+                if (ColorComboBox.SelectedItem is Color selectedColor)
+                {
+
+                    SolidColorBrush brush = new SolidColorBrush(selectedColor);
+                    EditorRichTextBox.Selection.ApplyPropertyValue(Inline.ForegroundProperty, brush);
+                }
+            }
+        }
+
+        private void EditorRichTextBox_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+            object fontWeight = EditorRichTextBox.Selection.GetPropertyValue(Inline.FontWeightProperty);
+            BoldToggleButton.IsChecked = (fontWeight != DependencyProperty.UnsetValue) && (fontWeight.Equals(FontWeights.Bold));
+
+            object fontStyle = EditorRichTextBox.Selection.GetPropertyValue(Inline.FontStyleProperty);
+            ItalicToggleButton.IsChecked = (fontStyle != DependencyProperty.UnsetValue) && (fontStyle.Equals(FontStyles.Italic));
+
+            object textDecoration = EditorRichTextBox.Selection.GetPropertyValue(Inline.TextDecorationsProperty);
+            UnderlineToggleButton.IsChecked = (textDecoration != DependencyProperty.UnsetValue) && (textDecoration.Equals(TextDecorations.Underline));
+
+            object fontFamily = EditorRichTextBox.Selection.GetPropertyValue(Inline.FontFamilyProperty);
+            FontFamilyComboBox.SelectedItem = fontFamily;
+
+            object foregroundColor = EditorRichTextBox.Selection.GetPropertyValue(Inline.ForegroundProperty);
+            if (foregroundColor is SolidColorBrush brush)
+            {
+                Color selectedColor = brush.Color;
+                ColorComboBox.SelectedItem = selectedColor;
+            }
+
+            object fontSize = EditorRichTextBox.Selection.GetPropertyValue(Inline.FontSizeProperty);
+            if (fontSize != DependencyProperty.UnsetValue)
+            {
+                FontSizeComboBox.SelectedItem = (double)fontSize;
+            }
+            
+        }
+        #endregion
+
+        #region ValidateFormData
+        private bool ValidateFormData()
+        {
+            bool isValid = true;
+
+
+            string input = txbActiveUsers.Text;
+            if (!string.IsNullOrEmpty(input))
+            {
+                try
+                {
+                    int result = int.Parse(input);
+
+                }
+                catch (FormatException)
+                {
+                    isValid = false;
+                    ActiveUsersErrorLable.Content = "Not a number!";
+                    txbActiveUsers.BorderBrush = Brushes.Red;
+                }
+            }
+
+            if (txbFilePathRtf.Text.Trim().Equals(string.Empty) || txbFilePathRtf.Text.Trim().Equals("Input file name"))
+            {
+                isValid = false;
+                FilePathRtfErrorLable.Content = "Field cannot be left empty!";
+                txbFilePathRtf.BorderBrush = Brushes.Red;
+            }
+            else
+            {
+                FilePathRtfErrorLable.Content = string.Empty;
+                txbFilePathRtf.BorderBrush = Brushes.Black;
+            }
+
+            if (txbActiveUsers.Text.Trim().Equals(string.Empty) || txbActiveUsers.Text.Trim().Equals("Input number of users"))
+            {
+                isValid = false;
+                ActiveUsersErrorLable.Content = "Field cannot be left empty!";
+                txbActiveUsers.BorderBrush = Brushes.Red;
+            }
+            else
+            {
+                ActiveUsersErrorLable.Content = string.Empty;
+                txbActiveUsers.BorderBrush = Brushes.Black;
+            }
+
+
+            if (SelectedImageNameLabel.Content.ToString().Trim() == string.Empty || SelectedImageNameLabel.Content.ToString() == "Image must be added!")
+            {
+                isValid = false;
+                SelectedImageNameLabel.Content = "Image must be added!";
+                SelectedImageNameLabel.Foreground = Brushes.Red;
+                BorderForImage.BorderBrush = Brushes.Red;
+            }
+
+            if (startFileName.Trim() != txbFilePathRtf.Text.Trim())
+            {
+                string xmlFilePath = "../../DataBase/game_engine.xml";
+
+                if (File.Exists(xmlFilePath))
+                {
+                    XmlSerializer serializer = new XmlSerializer(typeof(ObservableCollection<GameEngine>));
+                    using (FileStream fileStream = new FileStream(xmlFilePath, FileMode.Open))
+                    {
+                        GameEngines = (ObservableCollection<GameEngine>)serializer.Deserialize(fileStream);
+                    }
+                }
+                else
+                {
+                    GameEngines = new ObservableCollection<GameEngine>();
+                }
+
+                foreach (GameEngine engine in GameEngines) 
+                { 
+                    if(engine.RtfFilePath == txbFilePathRtf.Text.Trim())
+                    {
+                        txbFilePathRtf.BorderBrush = Brushes.Red;
+                        FilePathRtfErrorLable.Content = "Name is already in use";
+                        isValid = false;
+                        break;
+                    }
+                }
+
+            }
+
+            return isValid;
+        }
+        #endregion
+
+        #region GotFocus/LostFocus
+        private void txbActiveUsers_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (txbActiveUsers.Text.Trim().Equals("Input number of users"))
+            {
+                txbActiveUsers.Text = "";
+                txbActiveUsers.Foreground = Brushes.Black;
+            }
+            ActiveUsersErrorLable.Content = "";
+            txbActiveUsers.BorderBrush = Brushes.Black;
+        }
+
+        private void txbActiveUsers_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (txbActiveUsers.Text.Trim().Equals(string.Empty))
+            {
+                txbActiveUsers.Text = "Input number of users";
+                var bc = new BrushConverter();
+                txbActiveUsers.Foreground = (Brush)bc.ConvertFrom("#717286");
+
+            }
+        }
+
+        private void txbFilePathRtf_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (txbFilePathRtf.Text.Trim().Equals("Input file name"))
+            {
+                txbFilePathRtf.Text = "";
+                txbFilePathRtf.Foreground = Brushes.Black;
+            }
+            FilePathRtfErrorLable.Content = "";
+            txbFilePathRtf.BorderBrush = Brushes.Black;
+        }
+
+        private void txbFilePathRtf_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (txbFilePathRtf.Text.Trim().Equals(string.Empty))
+            {
+                txbFilePathRtf.Text = "Input file name";
+                var bc = new BrushConverter();
+                txbFilePathRtf.Foreground = (Brush)bc.ConvertFrom("#717286");
+
+            }
+        }
+        #endregion
+
+        #region WordCount
+        private void UpdateWordCount()
         {
 
+            string text = new TextRange(EditorRichTextBox.Document.ContentStart, EditorRichTextBox.Document.ContentEnd).Text;
+            int wordCount = text.Split(new char[] { ' ', '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries).Length;
+            wordCountTextBlock.Text = $"Word Count: {wordCount}";
         }
+
+        private void EditorRichTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            UpdateWordCount();
+        }
+        #endregion
+
+        #region PreviewTextInput/Regex
+        private void txbFilePathRtf_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^a-zA-Z0-9():_-]");
+            if (regex.IsMatch(e.Text))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void txbActiveUsers_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (!char.IsDigit(e.Text, 0))
+            {
+                e.Handled = true;
+                return;
+            }
+
+            TextBox textBox = (TextBox)sender;
+            string newText = textBox.Text.Insert(textBox.SelectionStart, e.Text);
+            int value;
+            if (!int.TryParse(newText, out value))
+            {
+                e.Handled = true;
+            }
+        }
+        #endregion
     }
 }

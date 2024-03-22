@@ -25,6 +25,7 @@ namespace CMS_Game_Engines.Windows
     /// </summary>
     public partial class TableWindow : Window
     {
+        #region Initialize
         public ObservableCollection<GameEngine> GameEngines { get; set; }
         public User savedUser = new User();
         public TableWindow(User user)
@@ -77,6 +78,13 @@ namespace CMS_Game_Engines.Windows
             this.DragMove();
         }
 
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            GameEnginesDataGrid.Items.SortDescriptions.Add(new SortDescription("DateAdded", ListSortDirection.Descending));
+        }
+        #endregion
+
+        #region LogOutBtn/ADDBtn
         private void LogOutBtn_Click(object sender, RoutedEventArgs e)
         {
             MessageBoxResult result = MessageBox.Show("Are you sure you want to sing out?", "Sing out Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
@@ -95,16 +103,16 @@ namespace CMS_Game_Engines.Windows
             addWindow.Show();
             this.Close();
         }
+        #endregion
 
+        #region Hyperlink
         private void Hyperlink_Click(object sender, RoutedEventArgs e)
         {
 
             var textBlock = (TextBlock)sender;
 
-            // Dobijanje stavke (objekta) koja je povezana sa tekstualnim blokom
-            var item = textBlock.DataContext as GameEngine; // Zamijenite YourItemClass sa stvarnim imenom vaše klase
+            var item = textBlock.DataContext as GameEngine;
 
-            // Provera da li je stavka pronađena
             if (item != null)
             {
                 if(savedUser.Role == UserRole.Admin)
@@ -120,15 +128,16 @@ namespace CMS_Game_Engines.Windows
                     this.Close();
                 }
                 
-
             }
             else
             {
-                // Ako nije pronađena stavka, možete prikazati odgovarajuću poruku ili rukovati drugačije
                 MessageBox.Show("Item not found.");
             }
 
         }
+        #endregion
+
+        #region DeleteBtn
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
             int cnt = 0;
@@ -187,11 +196,8 @@ namespace CMS_Game_Engines.Windows
                 MessageBox.Show("No item from the table is selected", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+        #endregion
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            GameEnginesDataGrid.Items.SortDescriptions.Add(new SortDescription("DateAdded", ListSortDirection.Descending));
-        }
     }
 }
 

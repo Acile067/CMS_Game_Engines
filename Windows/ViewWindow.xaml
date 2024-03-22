@@ -140,7 +140,11 @@
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
 
-                    <Button Style="{DynamicResource RoundButtonStyle}" Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="2"
+                    <Button 
+                        Style="{DynamicResource RoundButtonStyle}"
+                        Grid.Row="1" 
+                        Grid.RowSpan="2" 
+                        Grid.ColumnSpan="2"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         Width="50"
@@ -166,7 +170,7 @@
                         Content="Back"
                         FontWeight="Bold"
                         Margin="0 70 0 0"
-                    ></Label>
+                        ></Label>
 
                     <Label
                         Style="{StaticResource MontserratFont}"
@@ -225,7 +229,7 @@
                         Margin="0 40 0 0"
                         x:Name="SelectedImageNameLabel"
                         MaxWidth="145"
-                    ></Label>
+                        ></Label>
 
                     <Label
                         Style="{StaticResource MontserratFont}"
@@ -236,7 +240,6 @@
                         VerticalAlignment="Center"
                         FontWeight="Bold"
                         FontSize="14"
-                        
                         Content="Active users:"
                         ></Label>
 
@@ -254,7 +257,6 @@
                         Content=""
                         x:Name="NumberOfUsersLabel"
                         ></Label>
-
                 </Grid>
             </StackPanel>
         </StackPanel>

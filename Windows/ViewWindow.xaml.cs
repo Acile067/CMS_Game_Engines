@@ -22,6 +22,7 @@ namespace CMS_Game_Engines.Windows
     /// </summary>
     public partial class ViewWindow : Window
     {
+        #region Initialize
         public User savedUser = new User();
         public ViewWindow(GameEngine engine, User user)
         {
@@ -64,12 +65,15 @@ namespace CMS_Game_Engines.Windows
         {
             this.DragMove();
         }
+        #endregion
 
+        #region BackBtn
         private void BackBtn_Click(object sender, RoutedEventArgs e)
         {
             TableWindow tableWindow = new TableWindow(savedUser);
             tableWindow.Show();
             this.Close();
         }
+        #endregion
     }
 }

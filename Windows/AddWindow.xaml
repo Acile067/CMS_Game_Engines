@@ -90,29 +90,29 @@
                         <LineSegment Point="560,450" />
 
                         <ArcSegment
-                IsLargeArc="True"
-                Point="750,400"
-                RotationAngle="100"
-                Size="18,14"
-                SweepDirection="CounterClockwise" />
+                            IsLargeArc="True"
+                            Point="750,400"
+                            RotationAngle="100"
+                            Size="18,14"
+                            SweepDirection="CounterClockwise" />
 
                         <LineSegment Point="720,100" />
 
                         <ArcSegment
-                IsLargeArc="False"
-                Point="550,100"
-                RotationAngle="180"
-                Size="100,100"
-                SweepDirection="CounterClockwise" />
+                            IsLargeArc="False"
+                            Point="550,100"
+                            RotationAngle="180"
+                            Size="100,100"
+                            SweepDirection="CounterClockwise" />
 
                         <LineSegment Point="200,100" />
 
                         <ArcSegment
-            IsLargeArc="False"
-            Point="30,100"
-            RotationAngle="180"
-            Size="100,100"
-            SweepDirection="CounterClockwise" />
+                            IsLargeArc="False"
+                            Point="30,100"
+                            RotationAngle="180"
+                            Size="100,100"
+                            SweepDirection="CounterClockwise" />
 
                     </PathFigure>
                 </PathGeometry>
@@ -151,28 +151,31 @@
                         Margin="0 0 10 0"
                         ></Label>
 
-                    <TextBox HorizontalAlignment="Left" VerticalAlignment="Center"
-                                 Grid.Row="3" Grid.Column="3"
-                                 BorderBrush="#010105"
-                                 BorderThickness="2"
-                                 GotFocus="txbActiveUsers_GotFocus"
-                                 LostFocus="txbActiveUsers_LostFocus"
-                                 PreviewTextInput="txbActiveUsers_PreviewTextInput"
-                                 x:Name="txbActiveUsers"
-                                 Style="{StaticResource MontserratFont}"
-                                 Padding="5"
-                                 FontSize="15"
-                                 Width="244"
-                                 ToolTip="Enter number of active users"
-                                 ></TextBox>
+                    <TextBox 
+                        HorizontalAlignment="Left" 
+                        VerticalAlignment="Center"
+                        Grid.Row="3" Grid.Column="3"
+                        BorderBrush="#010105"
+                        BorderThickness="2"
+                        GotFocus="txbActiveUsers_GotFocus"
+                        LostFocus="txbActiveUsers_LostFocus"
+                        PreviewTextInput="txbActiveUsers_PreviewTextInput"
+                        x:Name="txbActiveUsers"
+                        Style="{StaticResource MontserratFont}"
+                        Padding="5"
+                        FontSize="15"
+                        Width="244"
+                        ToolTip="Enter number of active users"
+                        ></TextBox>
                     <Label
-                            Style="{StaticResource MontserratFont}"
-                            Content=""
-                            Foreground="Red"
-                            FontWeight="Bold"
-                            x:Name="ActiveUsersErrorLable"
-                            Grid.Row="3" Grid.Column="3"
-                            VerticalAlignment="Bottom"></Label>
+                        Style="{StaticResource MontserratFont}"
+                        Content=""
+                        Foreground="Red"
+                        FontWeight="Bold"
+                        x:Name="ActiveUsersErrorLable"
+                        Grid.Row="3" Grid.Column="3"
+                        VerticalAlignment="Bottom"
+                        ></Label>
 
                     <Label
                         Style="{StaticResource MontserratFont}"
@@ -183,11 +186,10 @@
                         Content="Description:"
                         FontWeight="Bold"
                         Margin="0 0 10 20"
-                    ></Label>
+                        ></Label>
                     <DockPanel
                         Grid.Row="1" Grid.Column="3"
                         Grid.RowSpan="2"
-                        
                         >
                         <ToolBar
                             ToolTip="ToolBar for description"
@@ -280,11 +282,9 @@
                             ToolTip="Add description"
                             Margin="0,1,0,0"
                             SelectionChanged="EditorRichTextBox_SelectionChanged" TextChanged="EditorRichTextBox_TextChanged"/>
-                        
+
                     </DockPanel>
 
-                    
-                    
                     <Label
                         Style="{StaticResource MontserratFont}"
                         FontSize="15"
@@ -295,20 +295,22 @@
                         FontWeight="Bold"
                         Margin="0 0 10 0"
                     ></Label>
-                    <TextBox HorizontalAlignment="Left" VerticalAlignment="Center"
-                            Grid.Row="0" Grid.Column="3"
-                            BorderBrush="#010105"
-                            BorderThickness="2"
-                            PreviewTextInput="txbFilePathRtf_PreviewTextInput"
-                            GotFocus="txbFilePathRtf_GotFocus"
-                            LostFocus="txbFilePathRtf_LostFocus"
-                            x:Name="txbFilePathRtf"
-                            Style="{StaticResource MontserratFont}"
-                            Padding="5"
-                            FontSize="15"
-                            ToolTip="File name (.rtf)"
-                            Width="244"
-                            ></TextBox>
+                    <TextBox 
+                        HorizontalAlignment="Left" 
+                        VerticalAlignment="Center"
+                        Grid.Row="0" Grid.Column="3"
+                        BorderBrush="#010105"
+                        BorderThickness="2"
+                        PreviewTextInput="txbFilePathRtf_PreviewTextInput"
+                        GotFocus="txbFilePathRtf_GotFocus"
+                        LostFocus="txbFilePathRtf_LostFocus"
+                        x:Name="txbFilePathRtf"
+                        Style="{StaticResource MontserratFont}"
+                        Padding="5"
+                        FontSize="15"
+                        ToolTip="File name (.rtf)"
+                        Width="244"
+                        ></TextBox>
                     <Label
                         Style="{StaticResource MontserratFont}"
                         FontWeight="Bold"
@@ -316,8 +318,14 @@
                         Foreground="Red"
                         x:Name="FilePathRtfErrorLable"
                         Grid.Row="0" Grid.Column="3"
-                        VerticalAlignment="Bottom"></Label>
-                    <Button Style="{DynamicResource RoundButtonStyle}" Grid.Row="1" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="2"
+                        VerticalAlignment="Bottom"
+                        ></Label>
+                    <Button 
+                        Style="{DynamicResource RoundButtonStyle}" 
+                        Grid.Row="1" 
+                        Grid.Column="4" 
+                        Grid.RowSpan="2" 
+                        Grid.ColumnSpan="2"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         Background="#FF197219"
@@ -328,12 +336,12 @@
                         Cursor="Hand"
                         Click="SaveBtn_Click"
         >
-                        <fa5:SvgAwesome
-                        Height="15"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Foreground="Black"
-                        Icon="Solid_Check" />
+                            <fa5:SvgAwesome
+                                Height="15"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Foreground="Black"
+                                Icon="Solid_Check" />
                     </Button>
                     <Label
                         Style="{StaticResource MontserratFont}"
@@ -355,12 +363,12 @@
                         ToolTip="Press to cancel"
                         Cursor="Hand" Click="CancelBtn_Click"
 >
-                        <fa5:SvgAwesome
-                        Height="15"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Foreground="Black"
-                        Icon="Solid_DoorOpen" />
+                            <fa5:SvgAwesome
+                                Height="15"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Foreground="Black"
+                                Icon="Solid_DoorOpen" />
                     </Button>
                     <Label
                         Style="{StaticResource MontserratFont}"
@@ -371,7 +379,7 @@
                         Content="Cancel"
                         FontWeight="Bold"
                         Margin="0 70 0 0"
-                    ></Label>
+                        ></Label>
 
                     <Button Style="{DynamicResource RoundButtonStyle}" Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="2"
                         HorizontalAlignment="Center"
@@ -400,7 +408,7 @@
                         Content="Add Image"
                         FontWeight="Bold"
                         Margin="0 70 0 0"
-                    ></Label>
+                        ></Label>
                     
                     <Border
                         
@@ -417,11 +425,10 @@
                         Height="80"
                         ToolTip="Image border"
                         Margin="0 0 0 18">
-                        <Image
-                            
-                            x:Name="ImagePreview"
-                            Stretch="Fill"
-                        ></Image>
+                            <Image
+                                x:Name="ImagePreview"
+                                Stretch="Fill"
+                            ></Image>
                     </Border>
 
                     <Label
@@ -435,8 +442,7 @@
                         Margin="0 76 0 0"
                         x:Name="SelectedImageNameLabel"
                         MaxWidth="145"
-                    ></Label>
-
+                        ></Label>
                 </Grid>
             </StackPanel>
         </StackPanel>

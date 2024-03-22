@@ -26,6 +26,7 @@ namespace CMS_Game_Engines.Windows
     /// </summary>
     public partial class AddWindow : Window
     {
+        #region Initialize
         public string savedPath = "";
         public string savedImageName = "";
         public User savedUser = new User();
@@ -33,6 +34,7 @@ namespace CMS_Game_Engines.Windows
         {
             InitializeComponent();
             savedUser = user;
+
             txbFilePathRtf.Text = "Input file name";
             var bc = new BrushConverter();
             txbFilePathRtf.Foreground = (Brush)bc.ConvertFrom("#717286");
@@ -48,7 +50,6 @@ namespace CMS_Game_Engines.Windows
                                             .ToList();
             FontSizeComboBox.ItemsSource = Enumerable.Range(1, 30).Select(i => (double)i).ToList();
             
-            //UpdateWordCount();
             this.DataContext = this;
         }
         
@@ -57,8 +58,9 @@ namespace CMS_Game_Engines.Windows
         {
             this.DragMove();
         }
-        
+        #endregion
 
+        #region CancelBtn
         private void CancelBtn_Click(object sender, RoutedEventArgs e)
         {
             MessageBoxResult result = MessageBox.Show("Are you sure you want to cancel?", "Cancel Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
@@ -70,7 +72,9 @@ namespace CMS_Game_Engines.Windows
                 this.Close();
             }
         }
+        #endregion 
 
+        #region SaveBtn
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
             if (ValidateFormData())
@@ -172,7 +176,9 @@ namespace CMS_Game_Engines.Windows
                 MessageBox.Show("New Game Engine successfully added", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
+        #endregion
 
+        #region AddImgBtn
         private void AddImgBtn_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -192,6 +198,9 @@ namespace CMS_Game_Engines.Windows
                 BorderForImage.BorderBrush = Brushes.Black;
             }
         }
+        #endregion
+
+        #region SelectionChanged->EditorRichTextBox
         private void EditorRichTextBox_SelectionChanged(object sender, RoutedEventArgs e)
         {
             object fontWeight = EditorRichTextBox.Selection.GetPropertyValue(Inline.FontWeightProperty);
@@ -242,6 +251,16 @@ namespace CMS_Game_Engines.Windows
                 EditorRichTextBox.Selection.ApplyPropertyValue(Inline.FontFamilyProperty, FontFamilyComboBox.SelectedItem);
             }
         }
+        private void FontSizeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (FontSizeComboBox.SelectedItem != null && !EditorRichTextBox.Selection.IsEmpty)
+            {
+                EditorRichTextBox.Selection.ApplyPropertyValue(Inline.FontSizeProperty, FontSizeComboBox.SelectedItem);
+            }
+        }
+        #endregion
+
+        #region ValidateFormData
         private bool ValidateFormData()
         {
             bool isValid = true;
@@ -298,15 +317,9 @@ namespace CMS_Game_Engines.Windows
 
             return isValid;
         }
+        #endregion
 
-        private void FontSizeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (FontSizeComboBox.SelectedItem != null && !EditorRichTextBox.Selection.IsEmpty)
-            {
-                EditorRichTextBox.Selection.ApplyPropertyValue(Inline.FontSizeProperty, FontSizeComboBox.SelectedItem);
-            }
-        }
-
+        #region GotFocus/LostFocus
         private void txbFilePathRtf_GotFocus(object sender, RoutedEventArgs e)
         {
             if (txbFilePathRtf.Text.Trim().Equals("Input file name"))
@@ -350,6 +363,31 @@ namespace CMS_Game_Engines.Windows
 
             }
         }
+        #endregion
+
+        #region WordCount
+        private void UpdateWordCount()
+        {
+            
+            string text = new TextRange(EditorRichTextBox.Document.ContentStart, EditorRichTextBox.Document.ContentEnd).Text;
+            int wordCount = text.Split(new char[] { ' ', '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries).Length;
+            wordCountTextBlock.Text = $"Word Count: {wordCount}";
+        }
+        private void EditorRichTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            UpdateWordCount();
+        }
+        #endregion
+
+        #region PreviewTextInput/Regex
+        private void txbFilePathRtf_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^a-zA-Z0-9():_-]");
+            if (regex.IsMatch(e.Text))
+            {
+                e.Handled = true;
+            }
+        }
 
         private void txbActiveUsers_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
@@ -367,26 +405,6 @@ namespace CMS_Game_Engines.Windows
                 e.Handled = true;
             }
         }
-
-        private void UpdateWordCount()
-        {
-            
-            string text = new TextRange(EditorRichTextBox.Document.ContentStart, EditorRichTextBox.Document.ContentEnd).Text;
-            int wordCount = text.Split(new char[] { ' ', '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries).Length;
-            wordCountTextBlock.Text = $"Word Count: {wordCount}";
-        }
-        private void EditorRichTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            UpdateWordCount();
-        }
-
-        private void txbFilePathRtf_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            Regex regex = new Regex("[^a-zA-Z0-9():_-]");
-            if (regex.IsMatch(e.Text))
-            {
-                e.Handled = true;
-            }
-        }
+        #endregion
     }
 }

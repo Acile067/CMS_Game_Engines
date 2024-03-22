@@ -25,6 +25,7 @@ namespace CMS_Game_Engines
     /// </summary>
     public partial class MainWindow : Window
     {
+        #region Initialize
         private const string usersFilePath = "../../DataBase/users.xml"; 
         private List<User> users;
         private NotificationManager notificationManager;
@@ -39,17 +40,6 @@ namespace CMS_Game_Engines
 
 
         }
-        private void ExitBtn_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBoxResult result = MessageBox.Show("Are you sure you want to exit?", "Exit Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
-
-            if (result == MessageBoxResult.Yes)
-            {
-                SaveUsers();
-                this.Close();
-            }
-            
-        }
         private void LoadUsers()
         {
             if (File.Exists(usersFilePath))
@@ -62,7 +52,7 @@ namespace CMS_Game_Engines
             }
             else
             {
-                
+
                 users = new List<User>
                 {
                     new User { Username = "admin", Password = "admin123", Role = UserRole.Admin },
@@ -70,12 +60,24 @@ namespace CMS_Game_Engines
                 };
             }
         }
-
-        public void ShowToastNotification(ToastNotification toastNotification)
+        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            notificationManager.Show(toastNotification.Title, toastNotification.Message, toastNotification.Type, "WindowNotificationArea");
+            this.DragMove();
         }
+        #endregion
 
+        #region ExitBtn
+        private void ExitBtn_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to exit?", "Exit Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                SaveUsers();
+                this.Close();
+            }
+            
+        }
         private void SaveUsers()
         {
             XmlSerializer serializer = new XmlSerializer(typeof(List<User>));
@@ -84,8 +86,16 @@ namespace CMS_Game_Engines
                 serializer.Serialize(stream, users);
             }
         }
-        
+        #endregion
 
+        #region ToastNotification
+        public void ShowToastNotification(ToastNotification toastNotification)
+        {
+            notificationManager.Show(toastNotification.Title, toastNotification.Message, toastNotification.Type, "WindowNotificationArea");
+        }
+        #endregion
+
+        #region LogInBtn
         private void LogInBtn_Click(object sender, RoutedEventArgs e)
         {
             string username = txbUsername.Text;
@@ -112,7 +122,9 @@ namespace CMS_Game_Engines
                 }
             }
         }
+        #endregion
 
+        #region ValidateFormData
         private bool ValidateFormData()
         {
             bool isValid = true;
@@ -147,11 +159,9 @@ namespace CMS_Game_Engines
 
             return isValid;
         }
-            private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            this.DragMove();
-        }
+        #endregion
 
+        #region GotFocus/LostFocus
         private void txbUsername_GotFocus(object sender, RoutedEventArgs e)
         {
             if (txbUsername.Text.Trim().Equals("Input Username"))
@@ -181,10 +191,7 @@ namespace CMS_Game_Engines
             txbPassword.BorderBrush = Brushes.Black;
 
         }
+        #endregion
 
-        private void txbPassword_LostFocus(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }

@@ -74,19 +74,17 @@
     </Window.Resources>
 
     <Canvas Width="750" Height="550">
-
-
         <Path Stroke="Black" StrokeThickness="2" Fill="#dad6d7">
             <Path.Data>
                 <PathGeometry>
                     <PathFigure StartPoint="30,100">
                         <LineSegment Point="0,400" />
                         <ArcSegment
-                        IsLargeArc="True"
-                        Point="190,450"
-                        RotationAngle="260"
-                        Size="18,14"
-                        SweepDirection="CounterClockwise" />
+                            IsLargeArc="True"
+                            Point="190,450"
+                            RotationAngle="260"
+                            Size="18,14"
+                            SweepDirection="CounterClockwise" />
 
                         <LineSegment Point="195,390" />
 
@@ -95,29 +93,29 @@
                         <LineSegment Point="560,450" />
 
                         <ArcSegment
-                        IsLargeArc="True"
-                        Point="750,400"
-                        RotationAngle="100"
-                        Size="18,14"
-                        SweepDirection="CounterClockwise" />
+                            IsLargeArc="True"
+                            Point="750,400"
+                            RotationAngle="100"
+                            Size="18,14"
+                            SweepDirection="CounterClockwise" />
 
                         <LineSegment Point="720,100" />
 
                         <ArcSegment
-                        IsLargeArc="False"
-                        Point="550,100"
-                        RotationAngle="180"
-                        Size="100,100"
-                        SweepDirection="CounterClockwise" />
+                            IsLargeArc="False"
+                            Point="550,100"
+                            RotationAngle="180"
+                            Size="100,100"
+                            SweepDirection="CounterClockwise" />
 
                         <LineSegment Point="200,100" />
 
                         <ArcSegment
-                    IsLargeArc="False"
-                    Point="30,100"
-                    RotationAngle="180"
-                    Size="100,100"
-                    SweepDirection="CounterClockwise" />
+                            IsLargeArc="False"
+                            Point="30,100"
+                            RotationAngle="180"
+                            Size="100,100"
+                            SweepDirection="CounterClockwise" />
 
                     </PathFigure>
                 </PathGeometry>
@@ -147,22 +145,26 @@
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
 
-                    <DataGrid Grid.Row="0" Grid.Column="2"
-                              Grid.ColumnSpan="2"
-                              Grid.RowSpan="4"
-                              BorderBrush="#010105"
-                              BorderThickness="2"
-                              Margin="0 15"
-                              ItemsSource="{Binding GameEngines}"
-                              x:Name="GameEnginesDataGrid"
-                              AutoGenerateColumns="False"
-                              ScrollViewer.CanContentScroll="True" 
-                              ScrollViewer.VerticalScrollBarVisibility="Auto"
-                              ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                              CanUserAddRows="False"                              
-                              >
+                    <DataGrid 
+                        Grid.Row="0" 
+                        Grid.Column="2"
+                        Grid.ColumnSpan="2"
+                        Grid.RowSpan="4"
+                        BorderBrush="#010105"
+                        BorderThickness="2"
+                        Margin="0 15"
+                        ItemsSource="{Binding GameEngines}"
+                        x:Name="GameEnginesDataGrid"
+                        AutoGenerateColumns="False"
+                        ScrollViewer.CanContentScroll="True" 
+                        ScrollViewer.VerticalScrollBarVisibility="Auto"
+                        ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                        CanUserAddRows="False"                              
+                        >
                         <DataGrid.Columns>
+                            
                             <DataGridCheckBoxColumn x:Name="SelectColon" Header="Select" Binding="{Binding IsSelected}" />
+                            
                             <DataGridHyperlinkColumn Header="Name" Binding="{Binding RtfFilePath}">
                                 <DataGridHyperlinkColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
@@ -178,20 +180,26 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
+                            
                             <DataGridTextColumn Header="Date Added" Binding="{Binding DateAdded}" SortMemberPath="DateAdded"/>
+                            
                         </DataGrid.Columns>
                     </DataGrid>
 
-                    <Button Style="{DynamicResource RoundButtonStyle}" Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="2"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Width="50"
-                            Height="50"
-                            x:Name="LogOutBtn"
-                            ToolTip="Press to log out"
-                            Click="LogOutBtn_Click"
-                            Cursor="Hand"
-                            >
+                    <Button 
+                        Style="{DynamicResource RoundButtonStyle}" 
+                        Grid.Row="1" 
+                        Grid.RowSpan="2" 
+                        Grid.ColumnSpan="2"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Width="50"
+                        Height="50"
+                        x:Name="LogOutBtn"
+                        ToolTip="Press to log out"
+                        Click="LogOutBtn_Click"
+                        Cursor="Hand"
+                        >
                         <fa5:SvgAwesome
                             Height="15"
                             HorizontalAlignment="Center"
@@ -209,7 +217,12 @@
                          FontWeight="Bold"
                          Margin="0 70 0 0"
                         ></Label>
-                    <Button Style="{DynamicResource RoundButtonStyle}" Grid.Row="1" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="2"
+                    <Button 
+                        Style="{DynamicResource RoundButtonStyle}" 
+                        Grid.Row="1" 
+                        Grid.Column="4" 
+                        Grid.RowSpan="2" 
+                        Grid.ColumnSpan="2"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         Width="50"
@@ -218,13 +231,13 @@
                         x:Name="ADDBtn"
                         ToolTip="Press to add new Game Engine"
                         Cursor="Hand" Click="ADDBtn_Click"
-        >
+                        >
                         <fa5:SvgAwesome
-                        Height="15"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Foreground="Black"
-                        Icon="Solid_Plus" />
+                            Height="15"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Foreground="Black"
+                            Icon="Solid_Plus" />
                     </Button>
                     <Label
                         Style="{StaticResource MontserratFont}"
@@ -238,7 +251,12 @@
                         Margin="0 70 0 0"
                         ></Label>
 
-                    <Button Style="{DynamicResource RoundButtonStyle}" Grid.Row="1" Grid.Column="6" Grid.RowSpan="2" Grid.ColumnSpan="3"
+                    <Button 
+                        Style="{DynamicResource RoundButtonStyle}" 
+                        Grid.Row="1" 
+                        Grid.Column="6" 
+                        Grid.RowSpan="2" 
+                        Grid.ColumnSpan="3"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         Width="50"
@@ -248,11 +266,11 @@
                         Cursor="Hand" Click="DeleteBtn_Click"
 >
                         <fa5:SvgAwesome
-                        Height="15"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Foreground="Black"
-                        Icon="Solid_Minus" />
+                            Height="15"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Foreground="Black"
+                            Icon="Solid_Minus" />
                     </Button>
                     <Label
                         x:Name="DeleteBtnLabel"
@@ -264,9 +282,7 @@
                         Content="Delete"
                         FontWeight="Bold"
                         Margin="0 70 0 0"
-                    ></Label>
-
-
+                        ></Label>
                 </Grid>
             </StackPanel>
         </StackPanel>
