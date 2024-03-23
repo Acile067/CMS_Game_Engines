@@ -2,6 +2,7 @@
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -29,7 +30,9 @@ namespace CMS_Game_Engines.Windows
         #region Initialize
         public string savedPath = "";
         public string savedImageName = "";
+        public string startFileName = "";
         public User savedUser = new User();
+        public ObservableCollection<GameEngine> GameEngines { get; set; }
         public AddWindow(User user)
         {
             InitializeComponent();
@@ -94,27 +97,7 @@ namespace CMS_Game_Engines.Windows
                 string validName = txbFilePathRtf.Text.Trim();
 
                 string xmlFilePath = "../../DataBase/game_engine.xml";
-                int counter = 0;
-
-                if (File.Exists(xmlFilePath))
-                {
-                    List<GameEngine> enginesCheck;
-                    XmlSerializer serializer = new XmlSerializer(typeof(List<GameEngine>));
-                    using (FileStream fileStream = new FileStream(xmlFilePath, FileMode.Open))
-                    {
-                        enginesCheck = (List<GameEngine>)serializer.Deserialize(fileStream);
-                    }
-
-                    foreach(var existingEngine in enginesCheck)
-                    {
-                        if(existingEngine.RtfFilePath == validName)
-                        {
-                            counter++;
-                            validName = $"{txbFilePathRtf.Text.Trim()}({counter})";
-                        }
-                    }
-
-                }
+                
 
 
                 GameEngine engine = new GameEngine(
@@ -325,6 +308,32 @@ namespace CMS_Game_Engines.Windows
                 SelectedImageNameLabel.Content = "Image must be added!";
                 SelectedImageNameLabel.Foreground = Brushes.Red;
                 BorderForImage.BorderBrush = Brushes.Red;
+            }
+
+            string xmlFilePath = "../../DataBase/game_engine.xml";
+
+            if (File.Exists(xmlFilePath))
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(ObservableCollection<GameEngine>));
+                using (FileStream fileStream = new FileStream(xmlFilePath, FileMode.Open))
+                {
+                    GameEngines = (ObservableCollection<GameEngine>)serializer.Deserialize(fileStream);
+                }
+            }
+            else
+            {
+                GameEngines = new ObservableCollection<GameEngine>();
+            }
+
+            foreach (GameEngine engine in GameEngines)
+            {
+                if (engine.RtfFilePath == txbFilePathRtf.Text.Trim())
+                {
+                    txbFilePathRtf.BorderBrush = Brushes.Red;
+                    FilePathRtfErrorLable.Content = "Name is already in use";
+                    isValid = false;
+                    break;
+                }
             }
 
             return isValid;
