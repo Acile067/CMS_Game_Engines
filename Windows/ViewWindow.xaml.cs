@@ -58,6 +58,8 @@ namespace CMS_Game_Engines.Windows
                 MessageBox.Show($"Error loading RTF file: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
+            string formattedDate = engine.DateAdded.ToString("dd-MM-yyyy");
+            DateAddedLabel.Content = formattedDate;
 
         }
 

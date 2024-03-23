@@ -115,7 +115,7 @@ namespace CMS_Game_Engines.Windows
 
                 string xmlFilePath = "../../DataBase/game_engine.xml";
 
-
+                #region Delete file from game_engine.xml
                 List<GameEngine> remainingEngines = new List<GameEngine>();
                 List<GameEngine> enginesForCheck = new List<GameEngine>();
 
@@ -161,6 +161,7 @@ namespace CMS_Game_Engines.Windows
                     }
 
                 }
+                #endregion
 
 
                 GameEngine engine = new GameEngine(

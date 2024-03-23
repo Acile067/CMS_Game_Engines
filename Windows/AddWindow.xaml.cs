@@ -63,13 +63,25 @@ namespace CMS_Game_Engines.Windows
         #region CancelBtn
         private void CancelBtn_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show("Are you sure you want to cancel?", "Cancel Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
-
-            if (result == MessageBoxResult.Yes)
+            if ((string.IsNullOrWhiteSpace(txbFilePathRtf.Text) || txbFilePathRtf.Text.Trim() == "Input file name")
+                && (string.IsNullOrWhiteSpace(txbActiveUsers.Text) || txbActiveUsers.Text.Trim() == "Input number of users")
+                && ImagePreview.Source == null
+                && string.IsNullOrWhiteSpace(new TextRange(EditorRichTextBox.Document.ContentStart, EditorRichTextBox.Document.ContentEnd).Text))
             {
                 TableWindow tableWindow = new TableWindow(savedUser);
                 tableWindow.Show();
                 this.Close();
+            }
+            else
+            {
+                MessageBoxResult result = MessageBox.Show("Are you sure you want to cancel?", "Cancel Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    TableWindow tableWindow = new TableWindow(savedUser);
+                    tableWindow.Show();
+                    this.Close();
+                }
             }
         }
         #endregion 

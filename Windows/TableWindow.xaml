@@ -7,7 +7,7 @@
         xmlns:notifications="clr-namespace:Notification.Wpf.Controls;assembly=Notification.Wpf"
         xmlns:local="clr-namespace:CMS_Game_Engines.Windows"
         mc:Ignorable="d"
-        Title="AdminWindow" Height="550" Width="750"
+        Title="AdminWindow" Height="550" Width="780"
         AllowsTransparency="True"
         Background="Transparent"
         SizeToContent="WidthAndHeight"
@@ -73,7 +73,7 @@
         </Style>
     </Window.Resources>
 
-    <Canvas Width="750" Height="550">
+    <Canvas Width="780" Height="550" Margin="5 0 0 0">
         <Path Stroke="Black" StrokeThickness="2" Fill="#dad6d7">
             <Path.Data>
                 <PathGeometry>
@@ -163,25 +163,18 @@
                         CanUserResizeColumns="False"
                         CanUserResizeRows="False"
                         CanUserReorderColumns="False"
+                        
                         >
                         <DataGrid.Columns>
                             
                             <DataGridCheckBoxColumn x:Name="SelectColon" Header="Select" Binding="{Binding IsSelected}">
-                                <DataGridCheckBoxColumn.ElementStyle>
-                                    <Style TargetType="CheckBox">
-                                        <Setter Property="VerticalAlignment" Value="Center"/>
-                                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
-                                    </Style>
-                                </DataGridCheckBoxColumn.ElementStyle>
+                                
                             </DataGridCheckBoxColumn>
 
-                            <DataGridHyperlinkColumn Header="Name" Binding="{Binding RtfFilePath}">
+                            <DataGridHyperlinkColumn Header="Name" Binding="{Binding RtfFilePath}" IsReadOnly="True">
                                 <DataGridHyperlinkColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <EventSetter Event="Hyperlink.Click" Handler="Hyperlink_Click"></EventSetter>
-                                        <Setter Property="VerticalAlignment" Value="Center"/>
-                                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
-                                        <Setter Property="Padding" Value="5"/>
                                     </Style>
                                 </DataGridHyperlinkColumn.ElementStyle>
                             </DataGridHyperlinkColumn>
@@ -193,13 +186,10 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            
-                            <DataGridTextColumn Header="Date Added" Binding="{Binding DateAdded}" SortMemberPath="DateAdded">
+
+                            <DataGridTextColumn Header="Date Added" Binding="{Binding DateAdded}" SortMemberPath="DateAdded" IsReadOnly="True">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
-                                        <Setter Property="VerticalAlignment" Value="Center"/>
-                                        <Setter Property="HorizontalAlignment" Value="Center"/>
-                                        <Setter Property="Padding" Value="10"/>
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>

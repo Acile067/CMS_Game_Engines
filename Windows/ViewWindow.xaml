@@ -6,7 +6,7 @@
         xmlns:fa5 ="http://schemas.fontawesome.com/icons/"
         xmlns:local="clr-namespace:CMS_Game_Engines.Windows"
         mc:Ignorable="d"
-        Title="ViewWindow" Height="550" Width="750"
+        Title="ViewWindow" Height="550" Width="780"
         AllowsTransparency="True"
         Background="Transparent"
         SizeToContent="WidthAndHeight"
@@ -72,7 +72,7 @@
     </Window.Resources>
 
 
-    <Canvas Height="550" Width="750">
+    <Canvas Height="550" Width="780" Margin="5 0 0 0">
         <Path Stroke="Black" StrokeThickness="2" Fill="#dad6d7">
             <Path.Data>
                 <PathGeometry>
@@ -256,6 +256,28 @@
                         Margin="100 0 0 0"
                         Content=""
                         x:Name="NumberOfUsersLabel"
+                        ></Label>
+
+                    <Label
+                        Style="{StaticResource MontserratFont}"
+                        Grid.Column="3"
+                        Grid.Row="3"
+                        Margin="0 0 0 15"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        FontSize="10"
+                        Content="Date added:"
+                        ></Label>
+                    <Label
+                        Style="{StaticResource MontserratFont}"
+                        Grid.Column="3"
+                        Grid.Row="3"
+                        Margin="0 15 0 0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        FontSize="10"
+                        x:Name="DateAddedLabel"
+                        Content=""
                         ></Label>
                 </Grid>
             </StackPanel>

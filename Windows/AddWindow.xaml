@@ -6,7 +6,7 @@
         xmlns:fa5 ="http://schemas.fontawesome.com/icons/"
         xmlns:local="clr-namespace:CMS_Game_Engines.Windows"
         mc:Ignorable="d"
-        Title="AddWindow" Height="550" Width="750"
+        Title="AddWindow" Height="550" Width="780"
         AllowsTransparency="True"
         Background="Transparent"
         SizeToContent="WidthAndHeight"
@@ -70,7 +70,7 @@
             </Setter>
         </Style>
     </Window.Resources>
-    <Canvas Height="550" Width="750">
+    <Canvas Height="550" Width="780" Margin="5 0 0 0">
         <Path Stroke="Black" StrokeThickness="2" Fill="#dad6d7">
             <Path.Data>
                 <PathGeometry>
