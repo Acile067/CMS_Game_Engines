@@ -116,8 +116,10 @@ namespace CMS_Game_Engines
                     mainWindow.ShowToastNotification(new ToastNotification("Invalid Username/Password", "Invalid username or password!", NotificationType.Error));
                     //MessageBox.Show("Invalid username or password!", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Error);
                     UsernameErrorLabel.Content = "Invalid username!";
+                    txbUsername.Text = "";
                     txbUsername.BorderBrush = Brushes.Red;
                     PasswordErrorLabel.Content = "Invalid password!";
+                    txbPassword.Clear();
                     txbPassword.BorderBrush = Brushes.Red;
                 }
             }
