@@ -153,5 +153,12 @@
     <Resource Include="Images\UnityEngine.png" />
     <Resource Include="Images\UnrealEngine.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\AddNew.png" />
+    <Resource Include="Images\Edit.png" />
+    <Resource Include="Images\Login.png" />
+    <Resource Include="Images\Table.png" />
+    <Resource Include="Images\View.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
