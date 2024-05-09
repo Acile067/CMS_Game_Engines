@@ -32,14 +32,14 @@ Here are some screenshots showing how the application looks:
 
 ![Table!](/Images/Table.png)
 
-## AddNew:
+### AddNew:
 
 ![AddNew!](/Images/AddNew.png)
 
-## Edit:
+### Edit:
 
 ![Edit!](/Images/Edit.png)
 
-## View:
+### View:
 
 ![View!](/Images/View.png)
